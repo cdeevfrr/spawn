@@ -22,6 +22,7 @@ function MapCanvas({map, percentage}: {map: Array<Array<Tile>>, percentage: numb
         gridTemplateRows: rows.join(" "),
         gap: ".5vw",
         width: percentage + "vw",
+        margin: "1vh",
         }}>
     {
         map.map(row =>

@@ -109,7 +109,7 @@ function App(props) {
           <MapCanvas map={submap} percentage={30} />
         </div>
 
-        <div style={{ gridArea: "footer", display: "flex", justifyContent: "center" }}>
+        <div style={{ gridArea: "footer", display: "flex", justifyContent: "center",}}>
           <PlayerActions tile={getTile(playerLocation, map)} playerChoseAction={playerChoseAction}/>
         </div>
 
