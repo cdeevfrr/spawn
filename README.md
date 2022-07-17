@@ -2,6 +2,21 @@
 A video game like NeoQuest but with a twist
 
 
+The idea behind this game is that it should be very much like neoquest - they player character gains exp for fighting monsters, you get skill points and a similar skill tree setup to Neoquest (health/def buffs, strength buffs, stuns = frost damage, fire damage, poison damage).
+
+However, the conciet is that you aren't on your own fighting the monsters. There's other people continuously leaving the town to ALSO fight monsters. And these are group battles (still turn based, but groups). 
+
+So while you CAN get through the game just increasing your damage & killing everything, it's much better to help out your friends.
+
+Then, it turns out that the monsters are also fighting each other (think fanged rabbits vs minor forest wolves). And you can help out some monsters against others. The game should end up consisting of strengthening certain species of monsters against other species, so that you can progress. Eg maybe you strength buff the bunnies and they overpower the wolves. 
+
+At the highest level, this might turn into conway's game of life - make patterns of bunnies into a glider form so they go kill the boss for you, or something.
+
+There should be different map tiles (desert, plains) and different kinds of monsters spawn on them. Eventually monsters should grow into a kind of stable state in each area - one population overpowers another, and they're essentially spawn camping. So it's your job to come in and sway the balance in the direction that most helps you.
+
+Monsters, and the buffs / changes you make to them, should persist. That's how you can affect the population.
+
+
 
 # Getting Started with Create React App
 
