@@ -1,7 +1,7 @@
 import { json } from 'stream/consumers';
 import { Vector, VectorPlus } from './Vector';
 
-export { Tile, Entity, getTiles, parse, findPlayerTileIndex }
+export { Tile, Entity, getTiles, parse, findPlayerTileIndex, removeEntity }
 
 interface Tile {
     type: number,
@@ -75,4 +75,11 @@ function findPlayerTileIndex(map: Array<Array<Tile>>){
         }
     }
     return null
+}
+
+function removeEntity(t: Tile, e: Entity){
+    const index = t.entities.indexOf(e);
+    if (index > -1) { 
+        t.entities.splice(index, 1); 
+    }
 }
