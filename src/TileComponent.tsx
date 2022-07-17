@@ -13,15 +13,12 @@ const tileTypeToImage = {
 }
 
 function TileComponent({tileObject}: {tileObject: Tile}){
-    if (!tileObject || !tileTypeToImage[tileObject.type]){
-        return <img width="100%" height="100%" src={imageTable.emptySvg}/>
-    }
-    const image = tileTypeToImage[tileObject.type]
+    const image = tileTypeToImage[tileObject?.type]
     let entityCounter = -1
     return <div style={{width:"100%", height:"100%"}}>
-        <img width="100%" height="100%" src={image}/>
+        <img width="100%" height="100%" src={image || imageTable.emptySvg}/>
         {
-            tileObject.entities.map(entity => {
+            tileObject?.entities?.map(entity => {
                 entityCounter += 1
                 const key = JSON.stringify(
                     entity, 
