@@ -4,16 +4,20 @@ import { TileComponent } from "./TileComponent"
 
 export {MapCanvas}
 
+const percentage = 80
+
 function MapCanvas({map}: {map: Array<Array<Tile>>}){
     const columnCount = map[0].length
     let counter = 0 // Make unique keys for React rendering optimization.
     const rows = []
+    const columns = []
     for (let i = 0; i < columnCount; i ++){
-        rows.push((80 / columnCount) + "vh")
+        rows.push((percentage / columnCount) + "vh")
+        columns.push((percentage / columnCount) + "vw")
     }
     return <div style={{
         display:"grid", 
-        gridTemplateColumns: rows.map(() => "auto").join(" "),
+        gridTemplateColumns: columns.join(" "),
         gridTemplateRows: rows.join(" "),
         gap: ".5vw",
         width: "80vw",
