@@ -1,16 +1,47 @@
+import { nextTick } from 'process';
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Bunny } from './Entities/Bunny';
 import { Player } from './Entities/Player';
 import { MapCanvas } from './MapCanvas';
-import { findPlayerTileIndex, getTiles, parse, removeEntity, Tile } from './MapHelpers';
+import { findPlayerTileIndex, getTiles, getTile, parse, removeEntity, Tile, moveEntity } from './MapHelpers';
+import { PlayerActions } from './PlayerActions';
+import { ActionKey, ActionFunction } from './PlayerActionTypes';
 import mapData from './Resources/map.json'
+import { Vector } from './Vector';
 
 export {
   App
 }
 
+const actions: {[key in ActionKey]: ActionFunction} = {
+  [ActionKey.Left]: makeMovePlayerFunction({x: -1, y: 0}),
+  [ActionKey.Right]: makeMovePlayerFunction({x: 1, y: 0}),
+  [ActionKey.Up]: makeMovePlayerFunction({x: 0, y: -1}),
+  [ActionKey.Down]: makeMovePlayerFunction({x: 0, y: 1}),
+}
+
+function makeMovePlayerFunction(direction: Vector){
+  return ({playerLocation, map}:{
+    playerLocation: Vector, 
+    map: Array<Array<Tile>>}) => {
+      getPlayer(map, playerLocation)
+      moveEntity(map, getPlayer(map, playerLocation), playerLocation, direction)
+    } 
+}
+
+function getPlayer(map, playerLocation){
+  const tile = getTile(playerLocation, map)
+  return tile.entities.find((e) => e.isPlayer)
+}
+
 const spawnLocation = {x: 13, y: 14}
+
+const defaultMap: Array<Array<Tile>> = [[
+  {type: 1, entities: []}
+]]
+defaultMap[0][0].entities.push(Player(defaultMap[0][0]))
+
 
 /**
  * The App component will handle all game state, mainly saved in the 'map' variable.
@@ -21,7 +52,7 @@ const spawnLocation = {x: 13, y: 14}
  * @returns 
  */
 function App(props) {
-  const [ map, setmap ] = useState([[]])
+  const [ map, setmap ] = useState(defaultMap)
 
   let playerLocation = findPlayerTileIndex(map)
 
@@ -48,6 +79,12 @@ function App(props) {
 
   const submap = getTiles(map, playerLocation)
 
+  function playerChoseAction(actionKey: ActionKey){
+    actions[actionKey]({playerLocation, map})
+    tick(map)
+    setmap([...map])
+  }
+
   return (
     <div className="App">
       <div style={{
@@ -65,11 +102,15 @@ function App(props) {
         </div>
 
         <div style={{ gridArea: "middle", display: "flex", justifyContent: "center" }}>
-          <MapCanvas map={submap} percentage={80} />
+          <MapCanvas map={submap} percentage={60} />
         </div>
 
         <div style={{ gridArea: "left", display: "flex", justifyContent: "center" }}>
-          <MapCanvas map={submap} percentage={10} />
+          <MapCanvas map={submap} percentage={30} />
+        </div>
+
+        <div style={{ gridArea: "footer", display: "flex", justifyContent: "center" }}>
+          <PlayerActions tile={getTile(playerLocation, map)} playerChoseAction={playerChoseAction}/>
         </div>
 
 
@@ -93,3 +134,8 @@ function respawnPlayer(map: Array<Array<Tile>>){
   tile.entities.push(Player(tile))
   return spawnLocation
 }
+
+function tick(map: Array<Array<Tile>>){
+
+}
+

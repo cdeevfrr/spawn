@@ -1,7 +1,16 @@
 import { json } from 'stream/consumers';
 import { Vector, VectorPlus } from './Vector';
 
-export { Tile, Entity, getTiles, parse, findPlayerTileIndex, removeEntity }
+export { 
+    Tile, 
+    Entity, 
+    getTiles, 
+    getTile,
+    parse, 
+    findPlayerTileIndex, 
+    removeEntity,
+    moveEntity,
+}
 
 interface Tile {
     type: number,
@@ -12,6 +21,7 @@ interface Entity {
     container: Tile,
     isPlayer?: boolean
     imageLookupKey: string
+    id: string
 }
 
 /// Tiles included for various render distances.
@@ -82,4 +92,16 @@ function removeEntity(t: Tile, e: Entity){
     if (index > -1) { 
         t.entities.splice(index, 1); 
     }
+}
+
+function moveEntity(map: Array<Array<Tile>>, entity: Entity, startLocation: Vector, direction: Vector){
+    const newLocation = VectorPlus(startLocation, direction)
+    const newTile = getTile(newLocation, map)
+    if (!newTile){
+        return
+    }
+
+    removeEntity(getTile(startLocation, map), entity)
+    newTile.entities.push(entity)
+    entity.container = newTile
 }

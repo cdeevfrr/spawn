@@ -7,5 +7,6 @@ function Player(location: Tile): Entity{
         container: location,
         imageLookupKey: "playerCharacterSvg",
         isPlayer: true,
+        id: Math.random().toString()
       }
 }

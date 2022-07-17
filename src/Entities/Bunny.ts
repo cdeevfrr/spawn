@@ -6,5 +6,6 @@ function Bunny(location: Tile): Entity{
     return {
         container: location,
         imageLookupKey: "bunnySvg",
+        id: Math.random().toString()
       }
 }

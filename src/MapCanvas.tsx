@@ -5,6 +5,9 @@ import { TileComponent } from "./TileComponent"
 export {MapCanvas}
 
 function MapCanvas({map, percentage}: {map: Array<Array<Tile>>, percentage: number}){
+    if (percentage < 30){
+        throw new Error("Haven't gotten CSS styling working for small maps yet")
+    }
     const columnCount = map[0].length
     let counter = 0 // Make unique keys for React rendering optimization.
     const rows = []
