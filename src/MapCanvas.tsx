@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import { Tile } from "./MapHelpers"
-import { TileComponent } from "./Tile"
+import { TileComponent } from "./TileComponent"
 
 export {MapCanvas}
 
@@ -20,9 +20,13 @@ function MapCanvas({map}: {map: Array<Array<Tile>>}){
         }}>
     {
         map.map(row =>
-            row.map(tile => 
-              <TileComponent tileObject={tile} key={(counter ++) + JSON.stringify(tile)}></TileComponent>
-            )
+            row.map(tile => {
+                // https://stackoverflow.com/questions/4910567/hide-certain-values-in-output-from-json-stringify
+                const entityContainerReducer = (key, value) => key === 'container'? undefined: value
+                // Keys needed so react knows when to re-render a tile.
+                const key = (counter ++) + JSON.stringify(tile, entityContainerReducer)
+                return <TileComponent tileObject={tile} key={key}></TileComponent>
+            })
         )
     }
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { MapCanvas } from './MapCanvas';
-import { Tile, getTiles } from './MapHelpers';
+import { findPlayerTileIndex, getTiles, parse } from './MapHelpers';
 import mapData from './Resources/map.json'
 
 export {
@@ -19,20 +19,29 @@ export {
 function App(props) {
   const [ map, setmap ] = useState([[]])
 
-  useEffect(() => setmap(mapData.map(row =>
-    row.map(pseudoTile => {
-      const newTile: Tile = {type: pseudoTile.t}
-      return newTile
-    }))
-    ), []) // set the map only on first load
+  let playerLocation = findPlayerTileIndex(map)
 
-  const playerLocation = {x: 14, y: 14}
+  useEffect(() => { // load the map from file only on first load
+    const loadedMap = parse(mapData)
+    playerLocation = findPlayerTileIndex(loadedMap)
+    if (playerLocation === null){
+      playerLocation = {x: 13, y: 14}
+      loadedMap[playerLocation.y][playerLocation.x].entities.push(
+        {
+          container: loadedMap[playerLocation.y][playerLocation.x],
+          imageLookupKey: "playerCharacterSvg",
+          isPlayer: true,
+        }
+      )
+    }
+    setmap(loadedMap)
+  }, []) 
+
   const submap = getTiles(map, playerLocation)
-
 
   return (
     <div className="App">
-      <header className="App-header" style= {{height: "15vh"}}>
+      <header className="App-header" style= {{height: "10vh"}}>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
