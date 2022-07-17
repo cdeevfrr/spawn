@@ -50,14 +50,31 @@ function App(props) {
 
   return (
     <div className="App">
-      <header className="App-header" style= {{height: "10vh"}}>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-      <div style = {{display: "flex", justifyContent: "center" }}>
-        <MapCanvas map={submap} />
+      <div style={{
+        display: "grid", 
+        gridTemplateAreas: `
+          'header header header header header header' 
+          'left middle middle middle middle right' 
+          'footer footer footer footer footer footer'`
+        }}>
+
+        <div style={{gridArea: "header", height: "10vh"}} className = "App-header">
+          <p>
+            Spawn
+          </p>
+        </div>
+
+        <div style={{ gridArea: "middle", display: "flex", justifyContent: "center" }}>
+          <MapCanvas map={submap} percentage={80} />
+        </div>
+
+        <div style={{ gridArea: "left", display: "flex", justifyContent: "center" }}>
+          <MapCanvas map={submap} percentage={10} />
+        </div>
+
+
       </div>
+
     </div>
   );
 }

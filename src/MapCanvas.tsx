@@ -4,9 +4,7 @@ import { TileComponent } from "./TileComponent"
 
 export {MapCanvas}
 
-const percentage = 80
-
-function MapCanvas({map}: {map: Array<Array<Tile>>}){
+function MapCanvas({map, percentage}: {map: Array<Array<Tile>>, percentage: number}){
     const columnCount = map[0].length
     let counter = 0 // Make unique keys for React rendering optimization.
     const rows = []
@@ -20,7 +18,7 @@ function MapCanvas({map}: {map: Array<Array<Tile>>}){
         gridTemplateColumns: columns.join(" "),
         gridTemplateRows: rows.join(" "),
         gap: ".5vw",
-        width: "80vw",
+        width: percentage + "vw",
         }}>
     {
         map.map(row =>
