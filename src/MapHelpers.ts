@@ -21,7 +21,8 @@ interface Entity {
     container: Tile,
     isPlayer?: boolean
     imageLookupKey: string
-    id: string
+    id: string,
+    displayName: string,
 }
 
 /// Tiles included for various render distances.

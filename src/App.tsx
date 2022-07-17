@@ -4,7 +4,7 @@ import './App.css';
 import { Bunny } from './Entities/Bunny';
 import { Player } from './Entities/Player';
 import { MapCanvas } from './MapCanvas';
-import { findPlayerTileIndex, getTiles, getTile, parse, removeEntity, Tile, moveEntity } from './MapHelpers';
+import { findPlayerTileIndex, getTiles, getTile, parse, removeEntity, Tile, moveEntity, Entity } from './MapHelpers';
 import { PlayerActions } from './PlayerActions';
 import { ActionKey, ActionFunction } from './PlayerActionTypes';
 import mapData from './Resources/map.json'
@@ -14,11 +14,13 @@ export {
   App
 }
 
-const actions: {[key in ActionKey]: ActionFunction} = {
+const actions: {[key in ActionKey]?: ActionFunction} = {
   [ActionKey.Left]: makeMovePlayerFunction({x: -1, y: 0}),
   [ActionKey.Right]: makeMovePlayerFunction({x: 1, y: 0}),
   [ActionKey.Up]: makeMovePlayerFunction({x: 0, y: -1}),
   [ActionKey.Down]: makeMovePlayerFunction({x: 0, y: 1}),
+  [ActionKey.Attack]: attack,
+  [ActionKey.DoNothing]: () => null,
 }
 
 function makeMovePlayerFunction(direction: Vector){
@@ -28,6 +30,12 @@ function makeMovePlayerFunction(direction: Vector){
       getPlayer(map, playerLocation)
       moveEntity(map, getPlayer(map, playerLocation), playerLocation, direction)
     } 
+}
+
+function attack( {playerLocation, map}, extraData: {target: Entity}){
+  if (extraData.target){
+    removeEntity(getTile(playerLocation, map), extraData.target)
+  }
 }
 
 function getPlayer(map, playerLocation){
@@ -79,8 +87,8 @@ function App(props) {
 
   const submap = getTiles(map, playerLocation)
 
-  function playerChoseAction(actionKey: ActionKey){
-    actions[actionKey]({playerLocation, map})
+  function playerChoseAction(actionKey: ActionKey, extraData?: any){
+    actions[actionKey]({playerLocation, map}, extraData)
     tick(map)
     setmap([...map])
   }
@@ -136,6 +144,31 @@ function respawnPlayer(map: Array<Array<Tile>>){
 }
 
 function tick(map: Array<Array<Tile>>){
+  const actions = [] // Save up all actions for this tick
+  // that way we don't, say, move an entity to the right and then move it again later.
+  for(let y = 0; y < map.length; y ++){
+    for (let x = 0; x < map[y].length; x++){
+      const tile = map[y][x]
 
+      for(const entity of tile.entities){
+        if (entity.displayName == "Fanged Bunny"){
+          const direction = [
+            {x: -1, y: 0},
+            {x: 1, y: 0},
+            {x: 0, y: -1},
+            {x: 0, y: 1},
+          ][Math.floor(Math.random() * 4)]
+          actions.push(()=> moveEntity(map, entity, {x,y}, direction))
+        }
+        // if (entity.displayName == "Angry Dog"){
+        //   // Look for entities around you & go towards them with 80% chance
+        // }
+      }
+    }
+  }
+
+  for (const action of actions){
+    action()
+  }
 }
 
