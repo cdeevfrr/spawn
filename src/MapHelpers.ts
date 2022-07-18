@@ -81,15 +81,23 @@ function removeEntity(t: Tile, e: Entity){
         t.entities.splice(index, 1); 
     }
 }
-
-function moveEntity(map: Array<Array<Tile>>, entity: Entity, startLocation: Vector, direction: Vector){
+/**
+ * 
+ * @param map 
+ * @param entity 
+ * @param startLocation 
+ * @param direction 
+ * @returns The final location of the entity, whether the move worked or not.
+ */
+function moveEntity(map: Array<Array<Tile>>, entity: Entity, startLocation: Vector, direction: Vector): Vector{
     const newLocation = VectorPlus(startLocation, direction)
     const newTile = getTile(newLocation, map)
     if (!newTile){
-        return
+        return startLocation
     }
 
     removeEntity(getTile(startLocation, map), entity)
     newTile.entities.push(entity)
     entity.container = newTile
+    return newLocation
 }

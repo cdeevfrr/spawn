@@ -1,6 +1,7 @@
 export {
     Vector,
-    VectorPlus
+    VectorPlus,
+    VectorMaxDistance,
 }
 
 interface Vector{
@@ -10,5 +11,9 @@ interface Vector{
 
 function VectorPlus(a: Vector, b: Vector){
     return {x: a.x + b.x, y: a.y + b.y}
+}
+
+function VectorMaxDistance(a: Vector, b:Vector){
+    return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y))
 }
 

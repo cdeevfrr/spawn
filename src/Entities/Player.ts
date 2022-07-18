@@ -3,12 +3,7 @@ import { Entity, Stats } from "./Entity"
 
 export { makePlayer }
 
-interface Player extends Entity{
-  exp: number,
-  level: number,
-}
-
-function makePlayer(location: Tile): Player{
+function makePlayer(location: Tile): Entity{
     return {
         container: location,
         imageLookupKey: "playerCharacterSvg",

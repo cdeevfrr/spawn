@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { Tile } from "./Tile";
-import { ActionKey } from "./PlayerActionTypes";
+import { ActionKey } from "./ActionTypes";
 import Popup from 'reactjs-popup';
 
 export {PlayerActions}
