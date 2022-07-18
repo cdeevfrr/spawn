@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/spawn/static/css/main.29a25c70.css",
-    "main.js": "/spawn/static/js/main.d73c2382.js",
+    "main.js": "/spawn/static/js/main.83ac76d4.js",
     "static/js/787.6a1be3b9.chunk.js": "/spawn/static/js/787.6a1be3b9.chunk.js",
     "index.html": "/spawn/index.html",
     "static/media/grouchyWolf.svg": "/spawn/static/media/grouchyWolf.45ea582b67a22a626adaa1528d68f9b9.svg",
@@ -12,11 +12,11 @@
     "static/media/playerCharacter.svg": "/spawn/static/media/playerCharacter.a8ae18760b272023591cd8c20ab1bf15.svg",
     "static/media/emptyTile.svg": "/spawn/static/media/emptyTile.0d4b20f4f3c6d76e587db536a32bb799.svg",
     "main.29a25c70.css.map": "/spawn/static/css/main.29a25c70.css.map",
-    "main.d73c2382.js.map": "/spawn/static/js/main.d73c2382.js.map",
+    "main.83ac76d4.js.map": "/spawn/static/js/main.83ac76d4.js.map",
     "787.6a1be3b9.chunk.js.map": "/spawn/static/js/787.6a1be3b9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.29a25c70.css",
-    "static/js/main.d73c2382.js"
+    "static/js/main.83ac76d4.js"
   ]
 }
