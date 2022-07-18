@@ -1,0 +1,23 @@
+<svg version="1.1"
+     width="110" height="100"
+     xmlns="http://www.w3.org/2000/svg">
+
+ 
+  <rect x="27" y="40" width="13" height="7" fill="grey" />
+  <rect x="35" y="30" width="20" height="15" fill="grey" />
+  <polygon fill="grey" points="53,30 41,21 43,30" />
+
+  <rect x="49" y="48" width="60" height="23" fill="grey" />
+  <polygon fill="grey" points="50,50 45,45 55,38 68,50" />
+
+  <rect x="102" y="30" width="7" height="20" fill="grey" />
+
+  <rect x="50" y="68" width="10" height="27" fill="grey" />
+  <rect x="95" y="68" width="10" height="27" fill="grey" />
+
+
+
+
+
+
+</svg>
