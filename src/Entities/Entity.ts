@@ -59,7 +59,10 @@ function isDead(entity: Entity){
 function attack(attacker: Entity, target: Entity): Stats{
     const attackerBonus = Math.random() * .4 + .9 // between .9 and 1.3
     const damage = 
-       Math.round(attacker.stats.strength * attackerBonus)  - target.stats.strength
+       Math.max(
+           Math.round(attacker.stats.strength * attackerBonus)  - target.stats.strength,
+           0
+       )
     target.stats.health.current -= damage
     const result = zeroStats()
     result.health.current = damage
