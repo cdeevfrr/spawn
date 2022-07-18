@@ -2,7 +2,7 @@
 import { ActionKey } from "../ActionTypes"
 import { Tile } from "../Tile"  
 
-export {Entity, Stats, ChooseActionFunction, isDead, attack}
+export {Entity, Stats, ChooseActionFunction, isDead, attack, Bar}
 
 interface Entity {
     container: Tile,

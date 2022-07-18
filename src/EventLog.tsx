@@ -9,12 +9,12 @@ function EventLog ({log, playerLocation}:{
     log: Array<PerformActionArgs>,
     playerLocation: Vector,
 }){
-    return <div>
+    return <div style={{width: "100%", height: "100%", display:"flex", flexDirection: "column"}}>
         <p>
             Historical events that happened in this location
         </p>
         <textarea 
-        style={{whiteSpace:"pre", height: "100%"}}
+        style={{whiteSpace:"pre", height: "100%", width: "100%"}}
         readOnly 
         value={
             log

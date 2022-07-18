@@ -14,6 +14,8 @@ import { GrouchyWolf, grouchyWolfAction } from './Entities/GrouchyWolf';
 import { EventLog } from './EventLog';
 import { PerformActionArgs } from './GameLogic';
 import { isDecorator } from 'typescript';
+import { EntityStats } from './EntityStats';
+import { PlayerInfoComponent } from './PlayerInfoComponent';
 
 export {
   App,
@@ -124,7 +126,8 @@ function App(props) {
         gridTemplateAreas: `
           'header header header header header header' 
           'left middle middle middle middle right' 
-          'footer footer footer footer footer footer'`
+          'footer footer footer footer footer footer'`,
+        gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
         }}>
 
         <div style={{gridArea: "header", height: "10vh"}} className = "App-header">
@@ -137,15 +140,15 @@ function App(props) {
           <MapCanvas map={submap} percentage={60} />
         </div>
 
-        <div style={{ gridArea: "right", display: "flex", justifyContent: "center" }}>
-          <MapCanvas map={submap} percentage={30} />
+        <div style={{ gridArea: "right", display: "flex", justifyContent: "center", width: "20vw" }}>
+          <PlayerActions tile={getTile(playerLocation, map)} playerChoseAction={playerChoseAction}/>
         </div>
-        <div style={{ gridArea: "left", display: "flex", justifyContent: "center" }}>
+        <div style={{ gridArea: "left", display: "flex", justifyContent: "center", width: "100%", height: "100%" }}>
           <EventLog log={eventLog} playerLocation={playerLocation}/>
         </div>
 
         <div style={{ gridArea: "footer", display: "flex", justifyContent: "center",}}>
-          <PlayerActions tile={getTile(playerLocation, map)} playerChoseAction={playerChoseAction}/>
+          <PlayerInfoComponent playerTile={getTile(playerLocation, map)} player={getPlayer(map, playerLocation)}/>
         </div>
 
 
