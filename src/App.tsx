@@ -5,17 +5,15 @@ import { makePlayer } from './Entities/Player';
 import { MapCanvas } from './MapCanvas';
 import { findPlayerTileIndex, getTiles, getTile, parse, removeEntity, moveEntity } from './MapHelpers';
 import { Tile } from './Tile';
-import { Entity, ChooseActionFunction, isDead, attack } from './Entities/Entity';
+import { ChooseActionFunction, isDead } from './Entities/Entity';
 import { PlayerActions } from './PlayerActions';
 import { ActionKey, moveActionKeys } from './ActionTypes';
 import mapData from './Resources/map.json'
 import { Vector } from './Vector';
 import { GrouchyWolf, grouchyWolfAction } from './Entities/GrouchyWolf';
 import { EventLog } from './EventLog';
-import { PerformActionArgs } from './GameLogic';
-import { isDecorator } from 'typescript';
-import { EntityStats } from './EntityStats';
 import { PlayerInfoComponent } from './PlayerInfoComponent';
+import { EventLogType, performAction } from './PerformAction';
 
 export {
   App,
@@ -24,31 +22,6 @@ export {
 const entityActions: {[key: string]:ChooseActionFunction} = {
   "Fanged Bunny": bunnyAction,
   "Grouchy Wolf": grouchyWolfAction
-}
-
-/**
- * The provided entity, which is in the tile at entityLocation, wants to
- * perform this action on that target.
- * 
- * Return the entity's new location after the action (mainly only used if the player moves)
- */
-function performAction({entity, entityLocation, action, target, map}: PerformActionArgs, eventLog: Array<PerformActionArgs>): Vector {
-  eventLog.push(arguments[0])
-  if (action in moveActionKeys){
-    return moveEntity(map, entity, entityLocation, moveActionKeys[action])
-  }
-  if (action == ActionKey.Attack){
-    if (target){
-      const damage = attack(entity, target)
-      if(isDead(target)){
-        removeEntity(getTile(entityLocation, map), target)
-      }
-    }
-    return entityLocation
-  }
-  if (action == ActionKey.DoNothing){
-    return entityLocation
-  }
 }
 
 function getPlayer(map: Array<Array<Tile>>, playerLocation: Vector){
@@ -74,7 +47,7 @@ defaultMap[0][0].entities.push(makePlayer(defaultMap[0][0]))
  */
 function App(props) {
   const [ map, setmap ] = useState(defaultMap)
-  const [eventLog, setEventLog] = useState([])
+  const [eventLog, setEventLog] = useState([[]])
 
   let playerLocation = findPlayerTileIndex(map)
 
@@ -173,7 +146,7 @@ function respawnPlayer(map: Array<Array<Tile>>){
   return spawnLocation
 }
 
-function tick(map: Array<Array<Tile>>, eventLog: Array<PerformActionArgs>){
+function tick(map: Array<Array<Tile>>, eventLog: EventLogType){
   const moveActions = [] // Save up all move actions for this tick
   // that way we don't, say, move an entity to the right and then move it again later.
   for(let y = 0; y < map.length; y ++){
@@ -229,6 +202,6 @@ function tick(map: Array<Array<Tile>>, eventLog: Array<PerformActionArgs>){
     eventLog.splice(-1000)
   }
 
-  eventLog.push(null) // an empty row marks the end of a tick.
+  eventLog.push([])
 }
 

@@ -1,14 +1,26 @@
 import React from "react";
-import { ActionKey, moveActionKeys } from "./ActionTypes";
-import { PerformActionArgs } from "./GameLogic";
+import { EventLogType } from "./PerformAction";
 import { Vector, VectorMaxDistance } from "./Vector";
 
 export {EventLog}
 
 function EventLog ({log, playerLocation}:{
-    log: Array<PerformActionArgs>,
+    log: EventLogType,
     playerLocation: Vector,
 }){
+    const lines = []
+    for(let i = log.length -1; i >= 0; i--){
+        const tick = log[i]
+        for(let j = tick.length - 1; j >= 0; j--){
+            const event = tick[j]
+            if ((!event.location) || VectorMaxDistance(playerLocation, event.location) <= 3){
+                lines.push(event.message)
+            }
+        }
+        lines.push("---")
+    }
+
+
     return <div style={{width: "100%", height: "100%", display:"flex", flexDirection: "column"}}>
         <p>
             Historical events that happened in this location
@@ -16,36 +28,7 @@ function EventLog ({log, playerLocation}:{
         <textarea 
         style={{whiteSpace:"pre", height: "100%", width: "100%"}}
         readOnly 
-        value={
-            log
-            .filter(actionArg => actionArg == null || VectorMaxDistance(playerLocation, actionArg.entityLocation) <= 3)
-            .map(entry => makeText(entry))
-            .reverse()
-            .join("\n")
-        }>
+        value={lines.join("\n")}>
         </textarea>
     </div>
-}
-
-const directionNames = {
-    [ActionKey.Left]: "left",
-    [ActionKey.Right]: "right",
-    [ActionKey.Up]: "up",
-    [ActionKey.Down]: "down",
-}
-
-function makeText(entry: PerformActionArgs){
-    if (entry == null){
-
-        return "---"
-    }
-    if(entry.action in moveActionKeys){
-        return `${entry.entity.displayName} moved ${directionNames[entry.action]}`
-    }
-    if(entry.action === ActionKey.Attack){
-        return `${entry.entity.displayName} attacked ${entry.target?.displayName}`
-    }
-    if(entry.action === ActionKey.DoNothing){
-        return `${entry.entity.displayName} did nothing`
-    }
 }
