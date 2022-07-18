@@ -1,5 +1,5 @@
 import React from "react"
-import { Tile } from "./MapHelpers"
+import { Tile } from "./Tile"
 import { imageTable } from "./imageLookup"
 import { EntityComponent } from "./EntityComponent"
 

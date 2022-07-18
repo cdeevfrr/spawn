@@ -2,9 +2,11 @@ import { nextTick } from 'process';
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Bunny } from './Entities/Bunny';
-import { Player } from './Entities/Player';
+import { makePlayer } from './Entities/Player';
 import { MapCanvas } from './MapCanvas';
-import { findPlayerTileIndex, getTiles, getTile, parse, removeEntity, Tile, moveEntity, Entity } from './MapHelpers';
+import { findPlayerTileIndex, getTiles, getTile, parse, removeEntity, moveEntity } from './MapHelpers';
+import { Tile } from './Tile';
+import { Entity } from './Entities/Entity';
 import { PlayerActions } from './PlayerActions';
 import { ActionKey, ActionFunction } from './PlayerActionTypes';
 import mapData from './Resources/map.json'
@@ -48,7 +50,7 @@ const spawnLocation = {x: 13, y: 14}
 const defaultMap: Array<Array<Tile>> = [[
   {type: 1, entities: []}
 ]]
-defaultMap[0][0].entities.push(Player(defaultMap[0][0]))
+defaultMap[0][0].entities.push(makePlayer(defaultMap[0][0]))
 
 
 /**
@@ -139,7 +141,7 @@ function respawnPlayer(map: Array<Array<Tile>>){
   }
 
   const tile = map[spawnLocation.y][spawnLocation.x]
-  tile.entities.push(Player(tile))
+  tile.entities.push(makePlayer(tile))
   return spawnLocation
 }
 

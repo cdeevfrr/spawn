@@ -1,4 +1,4 @@
-import { Tile } from "./MapHelpers";
+import { Tile } from "./Tile";
 import { Vector } from "./Vector";
 
 export {ActionKey, ActionFunction}

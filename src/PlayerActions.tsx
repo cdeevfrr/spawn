@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import { Tile } from "./MapHelpers";
+import { Tile } from "./Tile";
 import { ActionKey } from "./PlayerActionTypes";
 import Popup from 'reactjs-popup';
 

@@ -1,28 +1,15 @@
 import { json } from 'stream/consumers';
 import { Vector, VectorPlus } from './Vector';
+import { Tile } from './Tile';
+import { Entity } from './Entities/Entity';
 
 export { 
-    Tile, 
-    Entity, 
     getTiles, 
     getTile,
     parse, 
     findPlayerTileIndex, 
     removeEntity,
     moveEntity,
-}
-
-interface Tile {
-    type: number,
-    entities: Array<Entity>
-}
-
-interface Entity {
-    container: Tile,
-    isPlayer?: boolean
-    imageLookupKey: string
-    id: string,
-    displayName: string,
 }
 
 /// Tiles included for various render distances.

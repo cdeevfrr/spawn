@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react"
-import { Tile } from "./MapHelpers"
+import React from "react"
+import { Tile } from "./Tile"
 import { TileComponent } from "./TileComponent"
 
 export {MapCanvas}
