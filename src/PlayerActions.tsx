@@ -6,16 +6,16 @@ import Popup from 'reactjs-popup';
 export {PlayerActions}
 
 function PlayerActions({tile, playerChoseAction}: {tile: Tile, playerChoseAction: (ActionKey: ActionKey, extraData?: any) => void}) {
-    return <div >
-        <div style={{margin: "1vh",  
+    return <div style={{display:"flex", flexDirection: "column", width: "100%", height: "100%"}} >
+        <div style={{margin: "2vw",  
         display: "grid", gridTemplateAreas: `
         'corner1 top corner2'
-        'left mid right'
-        `}}>
-            <button onClick={()=> playerChoseAction(ActionKey.Left)} style={{gridArea: "left"}}>Left</button>
-            <button onClick={()=> playerChoseAction(ActionKey.Right)} style={{gridArea: "right"}}>Right</button>
-            <button onClick={()=> playerChoseAction(ActionKey.Up)} style={{gridArea: "top"}}>Up</button>
-            <button onClick={()=> playerChoseAction(ActionKey.Down)} style={{gridArea: "mid"}}>Down</button>
+        'left mid right'`,
+        }}>
+            <button onClick={()=> playerChoseAction(ActionKey.Left)} style={{gridArea: "left"}}>L</button>
+            <button onClick={()=> playerChoseAction(ActionKey.Right)} style={{gridArea: "right"}}>R</button>
+            <button onClick={()=> playerChoseAction(ActionKey.Up)} style={{gridArea: "top"}}>U</button>
+            <button onClick={()=> playerChoseAction(ActionKey.Down)} style={{gridArea: "mid"}}>D</button>
         </div>
         <div>
             <button onClick={()=> playerChoseAction(ActionKey.DoNothing)}>Do Nothing</button>
