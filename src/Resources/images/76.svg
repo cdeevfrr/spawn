@@ -1,0 +1,9 @@
+ <svg version="1.1"
+     width="100" height="100"
+     xmlns="http://www.w3.org/2000/svg">
+
+     <ellipse cx="48" cy="32" rx="41" ry="19" fill="black" />
+<rect x="2" y="25" width="82" height="56" fill="black" />
+<rect x="96" y="42" width="3" height="57" fill="black" />
+<ellipse cx="52" cy="12" rx="29" ry="7" fill="black" />
+</svg>
