@@ -1,14 +1,14 @@
 import { ChooseActionFunction, Entity, Stats } from "./Entity";
-import { Tile } from "../Tile";
 import { ActionKey } from "../ActionTypes";
+import { Vector } from "../Vector";
 
 export { Bunny, bunnyAction, displayName }
 
 const displayName = "Fanged Bunny"
 
-function Bunny(location: Tile): Entity{
+function Bunny(location: Vector): Entity{
     return {
-        container: location,
+        location,
         imageLookupKey: "bunnySvg",
         id: Math.random().toString(),
         displayName,

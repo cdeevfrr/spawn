@@ -27,10 +27,7 @@ function MapCanvas({map, percentage}: {map: Array<Array<Tile>>, percentage: numb
     {
         map.map(row =>
             row.map(tile => {
-                // https://stackoverflow.com/questions/4910567/hide-certain-values-in-output-from-json-stringify
-                const entityContainerReducer = (key, value) => key === 'container'? undefined: value
-                // Keys needed so react knows when to re-render a tile.
-                const key = (counter ++) + JSON.stringify(tile, entityContainerReducer)
+                const key = (counter ++) + JSON.stringify(tile)
                 return <TileComponent tileObject={tile} key={key}></TileComponent>
             })
         )

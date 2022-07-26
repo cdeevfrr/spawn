@@ -33,8 +33,9 @@ function performAction(
     }, eventLog: EventLogType): Vector 
 {
     if (action in moveActionKeys){
-      const result = moveEntity(map, entity, entityLocation, moveActionKeys[action])
-      if (result != entityLocation){
+      const oldLocation = entity.location  
+      moveEntity(map, entity, moveActionKeys[action])
+      if (entity.location != oldLocation){
         // addLog(eventLog,
         //     `${entity.displayName} moved ${directionNames[action]}`,
         //     entityLocation)

@@ -5,7 +5,7 @@ import desertSvg from "./Resources/images/desertTile.svg"
 import playerCharacterSvg from "./Resources/images/playerCharacter.svg"
 import bunnySvg from "./Resources/images/bunny.svg"
 import grouchyWolfSvg from "./Resources/images/grouchyWolf.svg"
-import villagerSvg from "./Resources/images/villager.svg"
+import villagerSvg from "./Resources/images/friendlies/villager.svg"
 
 
 

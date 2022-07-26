@@ -1,16 +1,16 @@
 import { ChooseActionFunction, Entity, Stats } from "./Entity";
 import { Tile } from "../Tile";
 import { ActionKey, moveActionKeys } from "../ActionTypes";
-import { VectorPlus } from "../Vector";
+import { Vector, VectorPlus } from "../Vector";
 import { displayName as bunnyDisplayName } from "./Bunny";
 
 export {GrouchyWolf, grouchyWolfAction, displayName}
 
 const displayName = "Grouchy Wolf"
 
-function GrouchyWolf(location: Tile): Entity{
+function GrouchyWolf(location: Vector): Entity{
     return {
-        container: location,
+        location,
         imageLookupKey: "grouchyWolfSvg",
         id: Math.random().toString(),
         displayName,

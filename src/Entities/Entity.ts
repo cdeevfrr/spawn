@@ -1,11 +1,12 @@
 
 import { ActionKey } from "../ActionTypes"
 import { Tile } from "../Tile"  
+import { Vector } from "../Vector"
 
 export {Entity, Stats, ChooseActionFunction, isDead, attack, Bar}
 
 interface Entity {
-    container: Tile,
+    location: Vector,
     isPlayer?: boolean,
     imageLookupKey: string,
     id: string,

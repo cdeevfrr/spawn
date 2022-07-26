@@ -7,8 +7,9 @@ export {
     getTiles, 
     getTile,
     parse, 
-    findPlayerTileIndex, 
+    findPlayer, 
     removeEntity,
+    teleportEntity,
     moveEntity,
 }
 
@@ -64,12 +65,11 @@ function parse(loadedMap: Array<Array<{t: number}>>){
         })) 
 }
 
-function findPlayerTileIndex(map: Array<Array<Tile>>){
+function findPlayer(map: Array<Array<Tile>>){
     for(let y = 0; y < map.length; y++){
         for(let x = 0; x < map[y].length; x++){
-            if(map[y][x].entities.some(entity=> entity.isPlayer)){
-                return {x, y}
-            }
+            const player = map[y][x].entities.find(entity=> entity.isPlayer)
+            if( player ){ return player}
         }
     }
     return null
@@ -81,23 +81,22 @@ function removeEntity(t: Tile, e: Entity){
         t.entities.splice(index, 1); 
     }
 }
-/**
- * 
- * @param map 
- * @param entity 
- * @param startLocation 
- * @param direction 
- * @returns The final location of the entity, whether the move worked or not.
- */
-function moveEntity(map: Array<Array<Tile>>, entity: Entity, startLocation: Vector, direction: Vector): Vector{
-    const newLocation = VectorPlus(startLocation, direction)
-    const newTile = getTile(newLocation, map)
+
+function moveEntity(map: Array<Array<Tile>>, entity: Entity, direction: Vector){
+    const newLocation = VectorPlus(entity.location, direction)
+    return teleportEntity(map, entity, newLocation)
+}
+
+function teleportEntity(map: Array<Array<Tile>>, entity: Entity, destination: Vector){
+    const newTile = getTile(destination, map)
     if (!newTile){
-        return startLocation
+        return
     }
 
-    removeEntity(getTile(startLocation, map), entity)
+    // add checks for tile type?
+
+
+    removeEntity(getTile(entity.location, map), entity)
     newTile.entities.push(entity)
-    entity.container = newTile
-    return newLocation
+    entity.location = destination
 }

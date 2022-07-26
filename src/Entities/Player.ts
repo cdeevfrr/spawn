@@ -1,11 +1,11 @@
-import { Tile } from "../Tile"
+import { Vector } from "../Vector"
 import { Entity, Stats } from "./Entity"
 
 export { makePlayer }
 
-function makePlayer(location: Tile): Entity{
+function makePlayer(location: Vector): Entity{
     return {
-        container: location,
+        location,
         imageLookupKey: "playerCharacterSvg",
         isPlayer: true,
         id: Math.random().toString(),

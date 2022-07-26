@@ -3,9 +3,9 @@ import './App.css';
 import { Bunny, bunnyAction } from './Entities/Bunny';
 import { makePlayer } from './Entities/Player';
 import { MapCanvas } from './MapCanvas';
-import { findPlayerTileIndex, getTiles, getTile, parse, removeEntity, moveEntity } from './MapHelpers';
+import { findPlayer, getTiles, getTile, parse, teleportEntity } from './MapHelpers';
 import { Tile } from './Tile';
-import { ChooseActionFunction, isDead } from './Entities/Entity';
+import { ChooseActionFunction, Entity, isDead } from './Entities/Entity';
 import { PlayerActions } from './PlayerActions';
 import { ActionKey, moveActionKeys } from './ActionTypes';
 import mapData from './Resources/map.json'
@@ -34,7 +34,7 @@ const spawnLocation = {x: 13, y: 14}
 const defaultMap: Array<Array<Tile>> = [[
   {type: 1, entities: []}
 ]]
-defaultMap[0][0].entities.push(makePlayer(defaultMap[0][0]))
+defaultMap[0][0].entities.push(makePlayer({x: 0, y: 0}))
 
 
 /**
@@ -49,41 +49,36 @@ function App(props) {
   const [ map, setmap ] = useState(defaultMap)
   const [eventLog, setEventLog] = useState([[]])
 
-  let playerLocation = findPlayerTileIndex(map)
+  let player: Entity = findPlayer(map)
 
   useEffect(() => { // load the map from file only on first load
     const loadedMap = parse(mapData)
 
-    playerLocation = findPlayerTileIndex(loadedMap)
-    if (playerLocation === null){
-      playerLocation = respawnPlayer(loadedMap)
+    player = findPlayer(loadedMap)
+    if (player === null){
+      player = respawnPlayer(loadedMap)
     }
 
     const bunnyTile = loadedMap[13][12]
-    bunnyTile.entities.push(Bunny(bunnyTile))
-    bunnyTile.entities.push(Bunny(bunnyTile))
-    bunnyTile.entities.push(Bunny(bunnyTile))
-    bunnyTile.entities.push(Bunny(bunnyTile))
+    bunnyTile.entities.push(Bunny({x: 12, y: 13}))
+    bunnyTile.entities.push(Bunny({x: 12, y: 13}))
+    bunnyTile.entities.push(Bunny({x: 12, y: 13}))
+    bunnyTile.entities.push(Bunny({x: 12, y: 13}))
 
     const wolfTile = loadedMap[13][11]
-    wolfTile.entities.push(GrouchyWolf(wolfTile))
-    wolfTile.entities.push(GrouchyWolf(wolfTile))
-
-
-    loadedMap[playerLocation.y][playerLocation.x].type = 2
-    bunnyTile.type = 2
-
+    wolfTile.entities.push(GrouchyWolf({y: 13, x: 11}))
+    wolfTile.entities.push(GrouchyWolf({y: 13, x: 11}))
 
     setmap(loadedMap)
   }, []) 
 
-  const submap = getTiles(map, playerLocation)
+  const submap = getTiles(map, player.location)
 
   function playerChoseAction(actionKey: ActionKey, extraData?: any){
-    playerLocation = performAction({
+    performAction({
       map,
-      entity: getPlayer(map, playerLocation),
-      entityLocation: playerLocation,
+      entity: player,
+      entityLocation: player.location,
       action: actionKey,
       target: extraData?.target,
     }, eventLog)
@@ -114,14 +109,14 @@ function App(props) {
         </div>
 
         <div style={{ gridArea: "right", display: "flex", justifyContent: "center", width: "20vw" }}>
-          <PlayerActions tile={getTile(playerLocation, map)} playerChoseAction={playerChoseAction}/>
+          <PlayerActions tile={getTile(player.location, map)} playerChoseAction={playerChoseAction}/>
         </div>
         <div style={{ gridArea: "left", display: "flex", justifyContent: "center", width: "100%", height: "100%" }}>
-          <EventLog log={eventLog} playerLocation={playerLocation}/>
+          <EventLog log={eventLog} playerLocation={player.location}/>
         </div>
 
         <div style={{ gridArea: "footer", display: "flex", justifyContent: "center",}}>
-          <PlayerInfoComponent playerTile={getTile(playerLocation, map)} player={getPlayer(map, playerLocation)}/>
+          <PlayerInfoComponent playerTile={getTile(player.location, map)} player={player}/>
         </div>
 
 
@@ -131,19 +126,15 @@ function App(props) {
   );
 }
 
-function respawnPlayer(map: Array<Array<Tile>>){
-  let playerLocation = findPlayerTileIndex(map)
-  if (playerLocation){
-    const oldTile = map[playerLocation.y][playerLocation.x]
-    const playerEntity = oldTile.entities.find(e => e.isPlayer)
-    if (playerLocation != null){
-      removeEntity(oldTile, playerEntity)
-    }
+function respawnPlayer(map: Array<Array<Tile>>): Entity{
+  let player = findPlayer(map)
+  if (player){
+    teleportEntity(map, player, spawnLocation)
   }
 
   const tile = map[spawnLocation.y][spawnLocation.x]
-  tile.entities.push(makePlayer(tile))
-  return spawnLocation
+  tile.entities.push(makePlayer(spawnLocation))
+  return player
 }
 
 function tick(map: Array<Array<Tile>>, eventLog: EventLogType){

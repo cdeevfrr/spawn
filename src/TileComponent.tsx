@@ -20,10 +20,7 @@ function TileComponent({tileObject}: {tileObject: Tile}){
         {
             tileObject?.entities?.map(entity => {
                 entityCounter += 1
-                const key = JSON.stringify(
-                    entity, 
-                    (key, value) => key === "container"? undefined : value
-                ) + entityCounter
+                const key = JSON.stringify(entity) + entityCounter
                 return <EntityComponent entity={entity} entityCounter={entityCounter} key={key}/>
             })
         }
