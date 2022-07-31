@@ -2,8 +2,21 @@
 import { ActionKey } from "../ActionTypes"
 import { Tile } from "../Tile"  
 import { Vector } from "../Vector"
+import { Spell } from "./Spell/Spell"
 
-export {Entity, Stats, ChooseActionFunction, isDead, attack, Bar}
+export {
+    Entity, 
+    Stats, 
+    StatType,
+    ChooseActionFunction, 
+    isDead, 
+    attack, 
+    Bar,
+    takeDamage,
+    getEffectiveStatAtk,
+    getEffectiveStatDef,
+    zeroStats,
+}
 
 interface Entity {
     location: Vector,
@@ -13,8 +26,10 @@ interface Entity {
     displayName: string,
     stats: Stats,
     buffs: Array<Buff>,
+    effects: Array<Effect>,
     exp: number,
     level: number,
+    equipped: Array<Spell>,
 }
 
 /**
@@ -32,39 +47,36 @@ interface Entity {
 type ChooseActionFunction = 
     (self, visibleTiles: Array<Array<Tile>>)=>{action: ActionKey, target?: Entity} | null
     
-
-interface Stats{
-    health: Bar,
-    mana: Bar,
-    will: Bar,
-    strength: number,
-    magic: number,
-    stamina: number,
+enum StatType {
+    health = "health",
+    mana = "mana",
+    will = "will",
 }
 
-function zeroStats(){
+type Stats = {
+    [key in StatType]: Bar
+}
+
+function zeroStats(): Stats{
     return {
-        health: {current: 0, max: 0},
-        strength: 0,
-        magic: 0,
-        mana: {current: 0, max: 0},
-        stamina: 0,
-        will: {current: 0, max: 0},
+        health: {current: 0, max: 0, atk: 0, def: 0},
+        mana: {current: 0, max: 0, atk: 0, def: 0},
+        will: {current: 0, max: 0, atk: 0, def: 0},
     }
 }
 
 function isDead(entity: Entity){
-  return entity.stats.health.current <= 0
+  return entity.stats[StatType.health].current <= 0
 }
 
 function attack(attacker: Entity, target: Entity): Stats{
     const attackerBonus = Math.random() * .4 + .9 // between .9 and 1.3
     const damage = 
        Math.max(
-           Math.round(attacker.stats.strength * attackerBonus)  - target.stats.strength,
+           Math.round(getEffectiveStatAtk(attacker, StatType.health) * attackerBonus)  - getEffectiveStatDef(target, StatType.health),
            0
        )
-    target.stats.health.current -= damage
+    takeDamage(target, StatType.health, damage)
     const result = zeroStats()
     result.health.current = damage
     return result
@@ -73,8 +85,35 @@ function attack(attacker: Entity, target: Entity): Stats{
 interface Bar{
     current: number,
     max: number,
+    atk: number,
+    def: number,
 }
 
+/**
+ * Bonuses or penalties to stats
+ */
 type Buff = {
     [key in keyof Stats]: number
 } & {timeout: number}
+
+/**
+ * Things that happen each turn, like poison or stun
+ */
+interface Effect {
+
+}
+
+function getEffectiveStatAtk(e: Entity, statType: StatType){
+    // todo combine with buffs
+    return e.stats[statType].atk
+}
+
+function getEffectiveStatDef(e: Entity, statType: StatType){
+    // todo combine with buffs
+    return e.stats[statType].def
+}
+
+function takeDamage(e: Entity, statType: StatType, amount: number){
+    e.stats[statType].current -= amount
+    return amount
+}

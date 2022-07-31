@@ -16,17 +16,16 @@ function Bunny(location: Vector): Entity{
         stats: baseStats(),
         exp: 0,
         level: 1,
+        effects: [],
+        equipped: [],
       }
 }
 
 function baseStats(): Stats{
   return {
-    health: {current: 3, max: 3},
-    strength: 1,
-    mana: {current: 5, max: 5},
-    magic: 1,
-    will: {current: 5, max: 5},
-    stamina: 5,
+    health: {current: 3, max: 3, atk: 1, def: 1,},
+    mana: {current: 5, max: 5, atk: 3, def: 1},
+    will: {current: 5, max: 5, atk: 5, def: 5},
   }
 }
 

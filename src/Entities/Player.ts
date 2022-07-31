@@ -14,17 +14,16 @@ function makePlayer(location: Vector): Entity{
         stats: baseStats(),
         exp: 0,
         level: 1,
+        effects: [],
+        equipped: [],
       }
 }
 
 function baseStats(): Stats{
   return {
-    health: {current: 10, max: 10},
-    strength: 3,
-    mana: {current: 5, max: 5},
-    magic: 3,
-    will: {current: 5, max: 5},
-    stamina: 3,
+    health: {current: 10, max: 10, atk: 3, def: 3},
+    mana: {current: 5, max: 5, atk: 3, def: 3},
+    will: {current: 5, max: 5, atk: 3, def: 3},
   }
 
 }

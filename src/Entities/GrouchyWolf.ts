@@ -18,17 +18,16 @@ function GrouchyWolf(location: Vector): Entity{
         stats: baseStats(),
         exp: 0,
         level: 1,
+        effects: [],
+        equipped: [],
       }
 }
 
 function baseStats(){
     return {
-        health: {current: 5, max: 5},
-        strength: 5,
-        mana: {current: 5, max: 5},
-        magic: 1,
-        will: {current: 3, max: 3},
-        stamina: 1,
+        health: {current: 5, max: 5, atk: 5, def: 2},
+        mana: {current: 5, max: 5, atk: 1, def: 1},
+        will: {current: 3, max: 3, atk: 1, def: 1},
       }
 }
 

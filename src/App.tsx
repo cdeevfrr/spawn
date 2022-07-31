@@ -130,10 +130,10 @@ function respawnPlayer(map: Array<Array<Tile>>): Entity{
   let player = findPlayer(map)
   if (player){
     teleportEntity(map, player, spawnLocation)
+  } else {
+    const tile = map[spawnLocation.y][spawnLocation.x]
+    tile.entities.push(makePlayer(spawnLocation))
   }
-
-  const tile = map[spawnLocation.y][spawnLocation.x]
-  tile.entities.push(makePlayer(spawnLocation))
   return player
 }
 
