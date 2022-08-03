@@ -1,6 +1,6 @@
 import { Tile } from "../../Tile";
 import { Entity, getEffectiveStatAtk, takeDamage, StatType, getEffectiveStatDef, zeroStats } from "../Entity";
-import { Spell } from "./Spell";
+import { Spell, isEntity } from "./Spell";
 
 export { fireball }
 
@@ -13,14 +13,19 @@ export { fireball }
  */
 
 const fireball : Spell = {
-    cast: (caster: Entity, target: Entity | Array<Tile>) => {
-        if (target instanceof Array){
-            return zeroStats()
+    cast: (caster: Entity, targets: Array<Entity | Tile>) => {
+        const resultArray = []
+        for (const target of targets){
+            if (! isEntity(target)){
+                resultArray.push(zeroStats())
+            } else {
+                const damage = getEffectiveStatAtk(caster, StatType.mana) - getEffectiveStatDef(target, StatType.mana)
+                const actualDamage = takeDamage(target, StatType.health, damage)
+                const result = zeroStats()
+                result.health.current -= actualDamage 
+                resultArray.push(result)
+            }
         }
-        const damage = getEffectiveStatAtk(caster, StatType.mana) - getEffectiveStatDef(target, StatType.mana)
-        const actualDamage = takeDamage(target, StatType.health, damage)
-        const result = zeroStats()
-        result.health.current -= actualDamage
-        return result
+        return resultArray
     }
 }
