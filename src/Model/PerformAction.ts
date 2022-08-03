@@ -1,5 +1,5 @@
 import { ActionKey, moveActionKeys } from "./ActionTypes"
-import { attack, Entity, isDead } from "./Entities/Entity"
+import { attack, Entity, isDead } from "../Entities/Entity"
 import { getTile, moveEntity, removeEntity } from "./MapHelpers"
 import { Tile } from "./Tile"
 import { Vector } from "./Vector"

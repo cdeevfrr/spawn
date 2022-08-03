@@ -1,4 +1,4 @@
-import { Tile } from "../../Tile";
+import { Tile } from "../../Model/Tile";
 import { Entity, getEffectiveStatAtk, takeDamage, StatType, getEffectiveStatDef, zeroStats } from "../Entity";
 import { Spell, isEntity } from "./Spell";
 

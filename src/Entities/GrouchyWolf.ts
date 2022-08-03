@@ -1,7 +1,7 @@
 import { ChooseActionFunction, Entity, Stats } from "./Entity";
-import { Tile } from "../Tile";
-import { ActionKey, moveActionKeys } from "../ActionTypes";
-import { Vector, VectorPlus } from "../Vector";
+import { Tile } from "../Model/Tile";
+import { ActionKey, moveActionKeys } from "../Model/ActionTypes";
+import { Vector, VectorPlus } from "../Model/Vector";
 import { displayName as bunnyDisplayName } from "./Bunny";
 
 export {GrouchyWolf, grouchyWolfAction, displayName}

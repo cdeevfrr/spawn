@@ -3,17 +3,17 @@ import './App.css';
 import { Bunny, bunnyAction } from '../Entities/Bunny';
 import { makePlayer } from '../Entities/Player';
 import { MapCanvas } from './MapCanvas';
-import { findPlayer, getTiles, getTile, parse, teleportEntity } from '../MapHelpers';
-import { Tile } from '../Tile';
+import { findPlayer, getTiles, getTile, parse, teleportEntity } from '../Model/MapHelpers';
+import { Tile } from '../Model/Tile';
 import { ChooseActionFunction, Entity, isDead } from '../Entities/Entity';
 import { PlayerActions } from './PlayerActions';
-import { ActionKey, moveActionKeys } from '../ActionTypes';
+import { ActionKey, moveActionKeys } from '../Model/ActionTypes';
 import mapData from '../Resources/map.json'
-import { Vector } from '../Vector';
+import { Vector } from '../Model/Vector';
 import { GrouchyWolf, grouchyWolfAction } from '../Entities/GrouchyWolf';
 import { EventLog } from './EventLog';
 import { PlayerInfoComponent } from './PlayerInfoComponent';
-import { EventLogType, performAction } from '../PerformAction';
+import { EventLogType, performAction } from '../Model/PerformAction';
 
 export {
   App,

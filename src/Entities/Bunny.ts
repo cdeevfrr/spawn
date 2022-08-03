@@ -1,6 +1,6 @@
 import { ChooseActionFunction, Entity, Stats } from "./Entity";
-import { ActionKey } from "../ActionTypes";
-import { Vector } from "../Vector";
+import { ActionKey } from "../Model/ActionTypes";
+import { Vector } from "../Model/Vector";
 
 export { Bunny, bunnyAction, displayName }
 

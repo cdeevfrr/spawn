@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { App }  from './Components/App';
 import reportWebVitals from './reportWebVitals';
-import { Tile } from './Tile';
+import { Tile } from './Model/Tile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

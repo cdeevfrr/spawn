@@ -1,7 +1,7 @@
 import React from "react";
 import { Entity } from "../Entities/Entity";
 import { EntityStats } from "./EntityStats";
-import { Tile } from "../Tile";
+import { Tile } from "../Model/Tile";
 
 export {PlayerInfoComponent}
 

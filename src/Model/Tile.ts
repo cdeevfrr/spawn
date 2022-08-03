@@ -1,4 +1,4 @@
-import { Entity } from "./Entities/Entity"
+import { Entity } from "../Entities/Entity"
 
 export {Tile}
 

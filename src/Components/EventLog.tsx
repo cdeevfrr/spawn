@@ -1,6 +1,6 @@
 import React from "react";
-import { EventLogType } from "../PerformAction";
-import { Vector, VectorMaxDistance } from "../Vector";
+import { EventLogType } from "../Model/PerformAction";
+import { Vector, VectorMaxDistance } from "../Model/Vector";
 
 export {EventLog}
 

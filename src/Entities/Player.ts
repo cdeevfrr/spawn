@@ -1,4 +1,4 @@
-import { Vector } from "../Vector"
+import { Vector } from "../Model/Vector"
 import { Entity, Stats } from "./Entity"
 
 export { makePlayer }

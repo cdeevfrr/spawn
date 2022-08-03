@@ -1,7 +1,7 @@
 
-import { ActionKey } from "../ActionTypes"
-import { Tile } from "../Tile"  
-import { Vector } from "../Vector"
+import { ActionKey } from "../Model/ActionTypes"
+import { Tile } from "../Model/Tile"  
+import { Vector } from "../Model/Vector"
 import { Spell } from "./Spell/Spell"
 
 export {

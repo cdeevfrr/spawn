@@ -10,7 +10,7 @@
  */
 
 import { ActionKey } from "./ActionTypes";
-import { Entity } from "./Entities/Entity";
+import { Entity } from "../Entities/Entity";
 import { Tile } from "./Tile";
 import { Vector } from "./Vector";
 

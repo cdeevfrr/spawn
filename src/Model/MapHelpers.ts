@@ -1,7 +1,7 @@
 import { json } from 'stream/consumers';
 import { Vector, VectorPlus } from './Vector';
 import { Tile } from './Tile';
-import { Entity } from './Entities/Entity';
+import { Entity } from '../Entities/Entity';
 
 export { 
     getTiles, 
