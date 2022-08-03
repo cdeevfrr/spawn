@@ -1,6 +1,6 @@
 import React from "react"
-import { Entity } from "./Entities/Entity"
-import { imageTable } from "./imageLookup"
+import { Entity } from "../Entities/Entity"
+import { imageTable } from "../imageLookup"
 
 
 export {EntityComponent}

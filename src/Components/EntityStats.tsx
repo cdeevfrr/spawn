@@ -1,5 +1,5 @@
 import React from "react";
-import { Entity } from "./Entities/Entity";
+import { Entity } from "../Entities/Entity";
 import { StatBarComponent } from "./StatBarComponent";
 
 export {EntityStats}

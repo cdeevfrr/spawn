@@ -1,6 +1,6 @@
 import React from "react"
-import { Tile } from "./Tile"
-import { imageTable } from "./imageLookup"
+import { Tile } from "../Tile"
+import { imageTable } from "../imageLookup"
 import { EntityComponent } from "./EntityComponent"
 
 export {
