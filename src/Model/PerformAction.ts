@@ -4,12 +4,7 @@ import { getTile, moveEntity, removeEntity } from "./MapHelpers"
 import { Tile } from "./Tile"
 import { Vector } from "./Vector"
 
-export {performAction, EventLogType}
-
-type EventLogType = Array<Array<{
-    message: string,
-    location?: Vector,
-}>>
+export {performAction}
 
 /**
  * The provided entity, which is in the tile at entityLocation, wants to
@@ -30,7 +25,7 @@ function performAction(
         action: ActionKey,
         target?: Entity,
         map: Array<Array<Tile>>,
-    }, eventLog: EventLogType): Vector 
+    }, eventLog: Array<{message: String, location?: Vector}>): Vector 
 {
     if (action in moveActionKeys){
       const oldLocation = entity.location  
@@ -53,7 +48,7 @@ function performAction(
                 `XP ${target.displayName} died!`,
                 entityLocation)
             
-            removeEntity(getTile(entityLocation, map), target)
+            removeEntity(getTile(target.location, map), target)
         }
       }
       return entityLocation
@@ -73,9 +68,9 @@ const directionNames = {
     [ActionKey.Down]: "down",
 }
 
-function addLog(eventLog, message, location){
-    eventLog[eventLog.length - 1].push({
-        message: message,
-        location: location,
+function addLog(eventLog: Array<{message: String, location?: Vector}>, message: String, location: Vector){
+    eventLog.push({
+        message,
+        location,
     })
 }

@@ -15,6 +15,7 @@ export {
     takeDamage,
     getEffectiveStatAtk,
     getEffectiveStatDef,
+    getEffectiveSpeed,
     zeroStats,
 }
 
@@ -111,6 +112,10 @@ function getEffectiveStatAtk(e: Entity, statType: StatType){
 function getEffectiveStatDef(e: Entity, statType: StatType){
     // todo combine with buffs
     return e.stats[statType].def
+}
+
+function getEffectiveSpeed(e: Entity){
+    return getEffectiveStatAtk(e, StatType.will) + e.stats[StatType.will].current
 }
 
 function takeDamage(e: Entity, statType: StatType, amount: number){

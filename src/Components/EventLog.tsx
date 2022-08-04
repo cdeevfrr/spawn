@@ -1,11 +1,10 @@
 import React from "react";
-import { EventLogType } from "../Model/PerformAction";
 import { Vector, VectorMaxDistance } from "../Model/Vector";
 
 export {EventLog}
 
 function EventLog ({log, playerLocation}:{
-    log: EventLogType,
+    log: Array<Array<{message: String, location: Vector}>>,
     playerLocation: Vector,
 }){
     const lines = []

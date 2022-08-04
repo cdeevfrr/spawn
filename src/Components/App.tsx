@@ -1,35 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
-import { Bunny, bunnyAction } from '../Entities/Bunny';
+import '../App.css';
+import { Bunny } from '../Entities/Bunny';
 import { makePlayer } from '../Entities/Player';
 import { MapCanvas } from './MapCanvas';
 import { findPlayer, getTiles, getTile, parse, teleportEntity } from '../Model/MapHelpers';
 import { Tile } from '../Model/Tile';
-import { ChooseActionFunction, Entity, isDead } from '../Entities/Entity';
+import { Entity, getEffectiveSpeed, isDead } from '../Entities/Entity';
 import { PlayerActions } from './PlayerActions';
 import { ActionKey, moveActionKeys } from '../Model/ActionTypes';
 import mapData from '../Resources/map.json'
 import { Vector } from '../Model/Vector';
-import { GrouchyWolf, grouchyWolfAction } from '../Entities/GrouchyWolf';
+import { GrouchyWolf } from '../Entities/GrouchyWolf';
 import { EventLog } from './EventLog';
 import { PlayerInfoComponent } from './PlayerInfoComponent';
-import { EventLogType, performAction } from '../Model/PerformAction';
+import { performAction } from '../Model/PerformAction';
+import { entityActions } from '../Model/EntityActions';
+import { EventStack, Phase } from '../Model/EventStack';
 
 export {
   App,
 }
 
-const entityActions: {[key: string]:ChooseActionFunction} = {
-  "Fanged Bunny": bunnyAction,
-  "Grouchy Wolf": grouchyWolfAction
-}
-
-function getPlayer(map: Array<Array<Tile>>, playerLocation: Vector){
-  const tile = getTile(playerLocation, map)
-  return tile.entities.find((e) => e.isPlayer)
-}
-
-const spawnLocation = {x: 13, y: 14}
+const spawnLocation: Vector = {x: 13, y: 14}
 
 const defaultMap: Array<Array<Tile>> = [[
   {type: 1, entities: []}
@@ -42,10 +34,9 @@ defaultMap[0][0].entities.push(makePlayer({x: 0, y: 0}))
  * 
  * All subcomponents must call setMap.
  * 
- * @param props 
  * @returns 
  */
-function App(props) {
+function App() {
   const [ map, setmap ] = useState(defaultMap)
   const [eventLog, setEventLog] = useState([[]])
 
@@ -74,15 +65,25 @@ function App(props) {
 
   const submap = getTiles(map, player.location)
 
+  const eventStack = new EventStack()
+
   function playerChoseAction(actionKey: ActionKey, extraData?: any){
-    performAction({
-      map,
-      entity: player,
-      entityLocation: player.location,
+    eventStack.addAction({
       action: actionKey,
-      target: extraData?.target,
-    }, eventLog)
-    tick(map, eventLog)
+      actor: player,
+      actorLocation: player.location,
+      map,
+      speed: getEffectiveSpeed(player),
+      occurIfDead: false,
+      occurIfStunned: false,
+      target: extraData?.target
+    }, Phase.mainPhase)
+
+    queueAllEntityActions(map, eventStack)
+    const actionResults = eventStack.tick(map)
+
+    eventLog.push(actionResults)
+
     setmap([...map])
     setEventLog([...eventLog])
   }
@@ -137,9 +138,7 @@ function respawnPlayer(map: Array<Array<Tile>>): Entity{
   return player
 }
 
-function tick(map: Array<Array<Tile>>, eventLog: EventLogType){
-  const moveActions = [] // Save up all move actions for this tick
-  // that way we don't, say, move an entity to the right and then move it again later.
+function queueAllEntityActions(map: Array<Array<Tile>>, eventStack: EventStack){
   for(let y = 0; y < map.length; y ++){
     for (let x = 0; x < map[y].length; x++){
       const tile = map[y][x]
@@ -153,46 +152,19 @@ function tick(map: Array<Array<Tile>>, eventLog: EventLogType){
         if(actionFunction){
           const desiredAction = actionFunction(entity,getTiles(map, {x, y}, 1) )
           if (desiredAction){
-            if (desiredAction.action in moveActionKeys){
-              moveActions.push(()=> {
-                !isDead(entity) && // Necessary because another entity might kill this one but the callback would still be in the move stack, which could revive this entity.
-                performAction({
-                  entity,
-                  map,
-                  entityLocation: {x,y},
-                  action: desiredAction.action,
-                  target: desiredAction.target,
-                }, eventLog)
-              })
-            } else {
-              // non-move actions, like attacks, should happen immediately.
-              // That way one thing can kill another without itself dying first.
-              // Note that the longer you're on a tile, the earlier you get to move,
-              // since entities entering a tile are inserted at the back.
-              performAction({
-                entity,
-                map,
-                entityLocation: {x,y},
-                action: desiredAction.action,
-                target: desiredAction.target,
-              }, eventLog)
-            }
+            eventStack.addAction({
+              action: desiredAction.action,
+              target: desiredAction.target,
+              actor: entity,
+              actorLocation: entity.location,
+              map,
+              speed: getEffectiveSpeed(entity),
+            }, Phase.mainPhase)
           }
         }
       }
     }
   }
 
-
-
-  for (const action of moveActions){
-    action()
-  }
-
-  if(eventLog.length > 1000){
-    eventLog.splice(-1000)
-  }
-
-  eventLog.push([])
 }
 

@@ -10,11 +10,12 @@
  */
 
 import { ActionKey } from "./ActionTypes";
-import { Entity } from "../Entities/Entity";
+import { Entity, isDead } from "../Entities/Entity";
 import { Tile } from "./Tile";
 import { Vector } from "./Vector";
+import { performAction } from "./PerformAction";
 
-export { EventStack }
+export { EventStack, Phase}
 
 type Action = {
     actor: Entity,
@@ -28,14 +29,15 @@ type Action = {
 }
 
 enum Phase {
-    prePhase,
-    mainPhase,
-    postPhase,
+    prePhase = "B",
+    mainPhase = "M",
+    postPhase = "A",
 }
 
 class EventStack {
     currentActions: {[key in Phase]: Array<Action> }
-    __constructor__(){
+
+    constructor(){
         this.currentActions = {
             [Phase.prePhase]: [],
             [Phase.mainPhase]: [],
@@ -47,8 +49,30 @@ class EventStack {
         this.currentActions[phase].push(todo)
     }
 
-    tick(){
-        
+    tick(map: Array<Array<Tile>>): Array<String>{
+        const eventLog = []
+
+        for (const phase of Object.values(Phase)){
+
+            this.currentActions[phase].sort((x, y) => x.speed - y.speed)
+
+            while (this.currentActions[phase].length > 0){
+                const nextAction = this.currentActions[phase].pop()
+
+                if ((! isDead(nextAction.actor)) || nextAction.occurIfDead){
+                    // TODO: If not stunned:
+                    performAction({
+                        action: nextAction.action,
+                        entity: nextAction.actor,
+                        entityLocation: nextAction.actor.location,
+                        map,
+                        target: nextAction.target
+                    }, eventLog)
+                }
+            }
+        }
+
+        return eventLog
     }
 }
 

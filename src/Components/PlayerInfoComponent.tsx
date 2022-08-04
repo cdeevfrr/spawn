@@ -21,7 +21,7 @@ function PlayerInfoComponent({playerTile, player}:{playerTile: Tile, player: Ent
         {
             playerTile.entities.filter(e => !e.isPlayer).map(entity =>{
                 return <div>
-                    <EntityStats entity={entity}/>
+                    <EntityStats entity={entity} key={entity.id}/>
                 </div>
             })
         }
