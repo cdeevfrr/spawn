@@ -22,17 +22,32 @@ function PlayerInfoComponent({playerTile, player, playerChoseAction}:{
           'player player e3 e4' 
           'player player e5 e6'`,
     }}>
-        <div style={{gridArea: "player", height: "100%"}}>
-            <EntityStats entity={player}/>
-            <TargetButton entity={player} player={player} playerChoseAction={playerChoseAction}/>
-        </div>
+        <TargetableEntity 
+          entity={player}
+          player={player}
+          playerChoseAction={playerChoseAction}
+          style={{gridArea: "player", height: "100%"}}
+        />
         {
             playerTile.entities.filter(e => !e.isPlayer).map(entity =>{
-                return <div>
-                    <EntityStats entity={entity} key={entity.id}/>
-                    <TargetButton entity={entity} key={entity.id} player={player} playerChoseAction={playerChoseAction}/>
-                </div>
+                return <TargetableEntity
+                entity = {entity}
+                player = {player}
+                playerChoseAction = {playerChoseAction}
+                />
             })
         }
+    </div>
+}
+
+function TargetableEntity({entity, player, playerChoseAction, style}:{
+    entity: Entity,
+    player: Entity,
+    playerChoseAction: (ActionKey: ActionKey, extraData?: any) => void,
+    style?:  React.CSSProperties
+}){
+    return <div style={{...style, display: "flex", flexDirection: "column" }}>
+        <EntityStats entity={entity}/>
+        <TargetButton entity={entity} player={player} playerChoseAction={playerChoseAction}/>
     </div>
 }
