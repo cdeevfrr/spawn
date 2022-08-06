@@ -3,8 +3,13 @@ import { attack, Entity, isDead } from "../Entities/Entity"
 import { getTile, moveEntity, removeEntity } from "./MapHelpers"
 import { Tile } from "./Tile"
 import { Vector } from "./Vector"
+import { hasUncaughtExceptionCaptureCallback } from "process"
 
 export {performAction}
+
+const spellActions = new Set([
+    ActionKey.Spell1, ActionKey.Spell2, ActionKey.Spell3, ActionKey.Spell4
+])
 
 /**
  * The provided entity, which is in the tile at entityLocation, wants to
@@ -35,6 +40,27 @@ function performAction(
         //     `${entity.displayName} moved ${directionNames[action]}`,
         //     entityLocation)
       }
+    }
+
+    if (spellActions.has(action)){
+        if(!target){
+            throw "Cannot use a spell without a target!"
+        }
+        const spellToUse = entity.equipped[action]
+        if (!spellToUse){
+            return entityLocation
+        }
+
+        const spellResults = spellToUse.cast(entity, [target])
+
+        // TODO make this actually display results more completely.
+        for(const spellResult of spellResults){
+            addLog( eventLog,
+                ` [- ${spellResult.health.current}] ${entity.displayName} cast ${spellToUse.name} on ${target?.displayName} for ${spellResult.health.current} damage`,
+                target.location
+            )
+        }
+
     }
 
     if (action == ActionKey.Attack){

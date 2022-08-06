@@ -13,6 +13,7 @@ export { fireball }
  */
 
 const fireball : Spell = {
+    name: "fireball",
     cast: (caster: Entity, targets: Array<Entity | Tile>) => {
         const resultArray = []
         for (const target of targets){

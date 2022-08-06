@@ -1,5 +1,6 @@
 import { Vector } from "../Model/Vector"
 import { Entity, Stats } from "./Entity"
+import { fireball } from "./Spell/Fireball"
 
 export { makePlayer }
 
@@ -15,7 +16,7 @@ function makePlayer(location: Vector): Entity{
         exp: 0,
         level: 1,
         effects: [],
-        equipped: [],
+        equipped: [fireball],
       }
 }
 

@@ -5,6 +5,7 @@ export { Spell, isEntity }
 
 interface Spell {
     cast: (caster: Entity, target: Array<Entity> | Array<Tile>) => Array<SpellResult>
+    name: string,
 }
 
 function isEntity(thing: Entity | Tile): thing is Entity{

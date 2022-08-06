@@ -1,20 +1,27 @@
 import { Tile } from "./Tile";
 import { Vector } from "./Vector";
 
-export {ActionKey, ActionFunction, moveActionKeys}
+export {ActionKey, ActionFunction, moveActionKeys, spellNumber}
 
 
 enum ActionKey {
-    Left,
-    Right,
-    Up,
-    Down,
-    DoNothing,
-    Attack,
-    Spell1,
-    Spell2,
-    Spell3,
-    Spell4,
+    Left = 10,
+    Right = 11,
+    Up = 12,
+    Down = 13,
+    DoNothing = 14,
+    Attack = 15,
+    Spell0 = 0,
+    Spell1 = 1,
+    Spell2 = 2,
+    Spell3 = 3,
+    Spell4 = 4,
+}
+
+function spellNumber(n: number): ActionKey{
+  if (0 <= n && n <= 4){
+    return n
+  }
 }
   
 type ActionFunction = ({playerLocation, map}:{

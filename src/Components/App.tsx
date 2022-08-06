@@ -117,7 +117,7 @@ function App() {
         </div>
 
         <div style={{ gridArea: "footer", display: "flex", justifyContent: "center",}}>
-          <PlayerInfoComponent playerTile={getTile(player.location, map)} player={player}/>
+          <PlayerInfoComponent playerTile={getTile(player.location, map)} player={player} playerChoseAction={playerChoseAction}/>
         </div>
 
 
