@@ -14,13 +14,8 @@ function PlayerInfoComponent({playerTile, player, playerChoseAction}:{
         playerChoseAction: (ActionKey: ActionKey, extraData?: any) => void,
     } ){
     return <div style={{
-        display: "grid", 
-        gridTemplateColumns: "25vw 25vw 25vw 25vw",
-        gridTemplateRows: "5vh 5vh 5vh",
-        gridTemplateAreas: `
-          'player player e1 e2' 
-          'player player e3 e4' 
-          'player player e5 e6'`,
+        display: "flex", 
+        flexDirection: "column",
     }}>
         <TargetableEntity 
           entity={player}

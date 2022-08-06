@@ -110,14 +110,10 @@ function App() {
         </div>
 
         <div style={{ gridArea: "right", display: "flex", justifyContent: "center", width: "20vw" }}>
-          <PlayerActions playerChoseAction={playerChoseAction}/>
+          <PlayerActions playerChoseAction={playerChoseAction} playerTile={getTile(player.location, map)} player={player}/>
         </div>
         <div style={{ gridArea: "left", display: "flex", justifyContent: "center", width: "100%", height: "100%" }}>
           <EventLog log={eventLog} playerLocation={player.location}/>
-        </div>
-
-        <div style={{ gridArea: "footer", display: "flex", justifyContent: "center",}}>
-          <PlayerInfoComponent playerTile={getTile(player.location, map)} player={player} playerChoseAction={playerChoseAction}/>
         </div>
 
 

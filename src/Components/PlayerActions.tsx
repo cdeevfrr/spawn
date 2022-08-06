@@ -1,9 +1,16 @@
 import React, { ReactNode, useState } from "react";
+import { Entity } from "../Entities/Entity";
 import { ActionKey } from "../Model/ActionTypes";
+import { Tile } from "../Model/Tile";
+import { PlayerInfoComponent } from "./PlayerInfoComponent";
 
 export {PlayerActions}
 
-function PlayerActions({playerChoseAction}: {playerChoseAction: (ActionKey: ActionKey, extraData?: any) => void}) {
+function PlayerActions({playerChoseAction, player, playerTile}: {
+    playerTile: Tile,
+    player: Entity
+    playerChoseAction: (ActionKey: ActionKey, extraData?: any) => void
+}) {
     return <div style={{display:"flex", flexDirection: "column", width: "100%", height: "100%"}} >
         <div style={{margin: "2vw",  
         display: "grid", gridTemplateAreas: `
@@ -18,5 +25,6 @@ function PlayerActions({playerChoseAction}: {playerChoseAction: (ActionKey: Acti
         <div>
             <button onClick={()=> playerChoseAction(ActionKey.DoNothing)}>Do Nothing</button>
         </div>
+        <PlayerInfoComponent playerTile={playerTile} player={player} playerChoseAction={playerChoseAction}/>
     </div>
 }
