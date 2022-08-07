@@ -55,8 +55,14 @@ function performAction(
 
         // TODO make this actually display results more completely.
         for(const spellResult of spellResults){
+            const spellEffectString = 
+            spellResult.health.current > 0? 
+              `${spellResult.health.current} health`
+            : `${spellResult.health.current} damage`
+
+
             addLog( eventLog,
-                ` [- ${spellResult.health.current}] ${entity.displayName} cast ${spellToUse.name} on ${target?.displayName} for ${spellResult.health.current} damage`,
+                ` [${spellResult.health.current}] ${entity.displayName} cast ${spellToUse.name} on ${target?.displayName} for ${spellEffectString}`,
                 target.location
             )
         }

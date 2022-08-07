@@ -12,6 +12,7 @@ export {
     isDead, 
     attack, 
     Bar,
+    Buff,
     takeDamage,
     getEffectiveStatAtk,
     getEffectiveStatDef,
@@ -93,9 +94,7 @@ interface Bar{
 /**
  * Bonuses or penalties to stats
  */
-type Buff = {
-    [key in keyof Stats]: number
-} & {timeout: number}
+type Buff = Stats & {uses: number, }
 
 /**
  * Things that happen each turn, like poison or stun
@@ -105,13 +104,19 @@ interface Effect {
 }
 
 function getEffectiveStatAtk(e: Entity, statType: StatType){
-    // todo combine with buffs
-    return e.stats[statType].atk
+    let result = e.stats[statType].atk
+    e.buffs.forEach(buff => {
+        result += buff[statType].atk
+    })
+    return result
 }
 
 function getEffectiveStatDef(e: Entity, statType: StatType){
-    // todo combine with buffs
-    return e.stats[statType].def
+    let result = e.stats[statType].def
+    e.buffs.forEach(buff => {
+        result += buff[statType].def
+    })
+    return result
 }
 
 function getEffectiveSpeed(e: Entity){

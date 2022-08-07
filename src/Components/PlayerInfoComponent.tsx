@@ -29,6 +29,7 @@ function PlayerInfoComponent({playerTile, player, playerChoseAction}:{
                 entity = {entity}
                 player = {player}
                 playerChoseAction = {playerChoseAction}
+                key={entity.id}
                 />
             })
         }

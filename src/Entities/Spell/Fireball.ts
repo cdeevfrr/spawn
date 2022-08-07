@@ -1,4 +1,3 @@
-import { Tile } from "../../Model/Tile";
 import { Entity, getEffectiveStatAtk, takeDamage, StatType, getEffectiveStatDef, zeroStats } from "../Entity";
 import { Spell, isEntity } from "./Spell";
 
@@ -14,7 +13,7 @@ export { fireball }
 
 const fireball : Spell = {
     name: "fireball",
-    cast: (caster: Entity, targets: Array<Entity | Tile>) => {
+    cast: (caster: Entity, targets) => {
         const resultArray = []
         for (const target of targets){
             if (! isEntity(target)){
