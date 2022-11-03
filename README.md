@@ -16,6 +16,10 @@ There should be different map tiles (desert, plains) and different kinds of mons
 
 Monsters, and the buffs / changes you make to them, should persist. That's how you can affect the population.
 
+## Deploying
+
+`npm run deploy`
+
 
 
 # Getting Started with Create React App
@@ -81,9 +85,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### `npm run build` fails to minify
 
