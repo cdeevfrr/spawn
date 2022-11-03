@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/spawn/static/css/main.29a25c70.css",
+    "main.js": "/spawn/static/js/main.48bef2e0.js",
+    "static/js/787.6a1be3b9.chunk.js": "/spawn/static/js/787.6a1be3b9.chunk.js",
+    "index.html": "/spawn/index.html",
+    "static/media/grouchyWolf.svg": "/spawn/static/media/grouchyWolf.45ea582b67a22a626adaa1528d68f9b9.svg",
+    "static/media/villager.svg": "/spawn/static/media/villager.04e37f6ec034aaed6d420aa8700dee97.svg",
+    "static/media/plainsTile.svg": "/spawn/static/media/plainsTile.cc0c551425e9faa5eb3c4e7c3e41d07c.svg",
+    "static/media/desertTile.svg": "/spawn/static/media/desertTile.18a38211270a13da86e954453bf1547a.svg",
+    "static/media/bunny.svg": "/spawn/static/media/bunny.a26ef60991faacf98015bb85bbdb1a37.svg",
+    "static/media/playerCharacter.svg": "/spawn/static/media/playerCharacter.a8ae18760b272023591cd8c20ab1bf15.svg",
+    "static/media/emptyTile.svg": "/spawn/static/media/emptyTile.0d4b20f4f3c6d76e587db536a32bb799.svg",
+    "main.29a25c70.css.map": "/spawn/static/css/main.29a25c70.css.map",
+    "main.48bef2e0.js.map": "/spawn/static/js/main.48bef2e0.js.map",
+    "787.6a1be3b9.chunk.js.map": "/spawn/static/js/787.6a1be3b9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.29a25c70.css",
+    "static/js/main.48bef2e0.js"
+  ]
+}
